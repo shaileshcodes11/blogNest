@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+  {{ post.title_tag }}
+{% endblock title %}
+
+{% block content %} 
+<br>
+<div class="container my-4">
+
+  <!-- Post Title & Metadata -->
+  <h1 class="mb-2">{{ post.title }}</h1>
+  <small class="text-muted">
+    By {{ post.author.first_name }} {{ post.author.last_name }} - {{ post.posted_at }}
+  </small>
+  <hr>
+ <div class="mb-4">
+    {% if post.header_image %}
+        <img src="{{ post.header_image.url }}" 
+             alt="{{ post.title }}" 
+             class="float-start me-3 mb-3 post-header-image">
+    {% endif %}
+
+    <div class="post-body">
+        {{ post.body|safe }}
+    </div>
+</div>
+
+
+
+  <!-- Like & Edit/Delete -->
+  <div class="mb-4 d-flex justify-content-between align-items-center">
+    <!-- Left: Like -->
+    <div>
+      <form action="{% url 'like_post' post.pk %}" method="post" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm">Like</button>
+      </form>
+      <span class="ms-2">{{ post.total_likes }} Likes</span>
+    </div>
+
+    <!-- Right: Edit/Delete (only for author) -->
+    {% if user.is_authenticated and user.id == post.author.id %}
+      <div>
+        <a href="{% url 'update_post' post.pk %}">Edit</a> |
+        <a  class="text-danger" href="{% url 'delete_post' post.pk %}">Delete</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Comments Section -->
+  <div class="mb-5">
+    <h4 class="mb-3">Comments</h4>
+    {% if post.comments.exists %}
+      {% for comment in post.comments.all %}
+        <div class="mb-3 p-3 border rounded shadow-sm bg-light">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong>{{ comment.name }}</strong>
+            <small class="text-muted">{{ comment.date_added }}</small>
+          </div>
+          <p class="mb-0">{{ comment.body }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="p-3 border rounded bg-light text-muted">
+        No comments yet...
+      </div>
+    {% endif %}
+    
+    <!-- Add Comment Button -->
+    <div class="mt-3">
+      <a href="{% url 'add_comment' post.pk %}" class="btn btn-secondary btn-sm">Add Comment</a>
+    </div>
+  </div>
+
+  <!-- Author Card - Separated -->
+  <h4 class="mb-3">About the Author</h4>
+  <div class="card mb-4 shadow-sm border-0 p-3">
+    <div class="row g-0 align-items-center">
+
+      <!-- Author Image -->
+      <div class="col-md-3 d-flex justify-content-center">
+        {% if post.author.userprofile.profile_image %}
+          <img src="{{ post.author.userprofile.profile_image.url }}" 
+               alt="Profile Image" 
+               class="rounded-circle border border-secondary" 
+               style="width: 150px; height: 150px; object-fit: cover;">
+        {% else %}
+          <img src="{% static 'theblog/images/default_profile.png' %}" 
+               alt="Default Profile" 
+               class="rounded-circle border border-secondary" 
+               style="width: 150px; height: 150px; object-fit: cover;">
+        {% endif %}
+      </div>
+
+      <!-- Author Info -->
+      <div class="col-md-9">
+        <div class="card-body">
+
+          <!-- Author Name -->
+          <h4 class="card-title mb-2 text-dark">{{ post.author.first_name|title }} {{ post.author.last_name|title }}</h4>
+
+          <!-- Bio -->
+          <p class="card-text text-muted mb-2">{{ post.author.userprofile.bio }}</p>
+
+          <!-- Profile & Social Links -->
+          <div>
+            <a href="{% url 'show_profile_page' post.author.userprofile.id %}" class="btn btn-dark btn-sm m-1">Profile Page</a>
+            {% if post.author.userprofile.linkedin_url %}
+              <a href="{{ post.author.userprofile.linkedin_url }}" target="_blank" class="btn btn-primary btn-sm m-1">
+                <i class="fa-brands fa-linkedin-in"></i> LinkedIn
+              </a>
+            {% endif %}
+            {% if post.author.userprofile.github_url %}
+              <a href="{{ post.author.userprofile.github_url }}" target="_blank" class="btn btn-dark btn-sm m-1">
+                <i class="fa-brands fa-github"></i> GitHub
+              </a>
+            {% endif %}
+            {% if post.author.userprofile.insta_url %}
+              <a href="{{ post.author.userprofile.insta_url }}" target="_blank" class="btn btn-danger btn-sm m-1">
+                <i class="fa-brands fa-instagram"></i> Instagram
+              </a>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endblock content %}

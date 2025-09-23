@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}
+  Edit Profile
+{% endblock title %}
+{% block content %}
+
+<div style="margin-top: 50px;">  <!-- Added top margin to push content down -->
+  <h1>Edit Profile</h1><br>
+
+  <p>{{ user.userprofile.bio }}</p>
+
+  <div class="form-group" style="max-width: 600px; text-align: left;">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-secondary">Update Profile</button>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

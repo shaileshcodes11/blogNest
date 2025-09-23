@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+  Create a new Blog Post.
+{% endblock title %}
+{% block content %}
+  
+<br> <br>
+
+{% if user.is_authenticated %}
+
+      {% if user.id == post.author.id %}
+
+            <h1>Update Post</h1><br>
+            <div class="form-group">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}  <!-- Only needed if you use CKEditor -->
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-secondary">Update</button>
+    </form>
+</div>
+
+          {% else %}
+        <h3>You are not allowed here! (and you know it...)</h3>
+        
+      {% endif %}
+{% else %}
+<h3>You are not allowed here! (and you know it...)</h3>
+{% endif %}
+{% endblock content %}

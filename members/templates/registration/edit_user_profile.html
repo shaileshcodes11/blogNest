@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}
+Edit Profile Page
+{% endblock title %}
+{% block content %}
+
+<div style="margin-top: 80px; max-width: 700px; text-align: left;"> <!-- added top margin and max width -->
+    {% if user.is_authenticated %}
+        {% if user.id == userprofile.user.id %}
+            <h1>Edit Profile Page</h1><br>
+            <div class="form-group">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Update Profile Page</button>
+                </form>
+            </div>
+        {% else %}
+            <br><br><br>
+            <h3>You are not the correct user to edit this blog!!!</h3>
+        {% endif %}
+    {% else %}
+        <h3>You are not allowed here! (and you know it...)</h3>
+    {% endif %}
+</div>
+
+{% endblock content %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}
+  New Category
+{% endblock title %}
+
+{% block content %}
+<div class="container my-5" style="max-width: 600px;">
+
+  <h1 class="mb-4 text-center">Add New Category</h1>
+<br><br>
+  <form method="POST">
+    {% csrf_token %}
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        Please fix the errors below.
+      </div>
+    {% endif %}
+
+    <div class="mb-3">
+      {{ form.as_p }}
+    </div>
+    <br>
+
+    <!-- Save Category button (small width) -->
+    <button class="btn btn-dark btn-sm" type="submit" style="width: 150px;">Save Category</button>
+<br> <br>
+    <!-- Back button (small width) -->
+    <a href="{% url 'home' %}" class="btn btn-secondary btn-sm" style="width: 150px;">&larr; Back to Home</a>
+
+  </form>
+
+</div>
+{% endblock %}
