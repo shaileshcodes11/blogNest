@@ -145,7 +145,7 @@ CKEDITOR_5_CONFIGS = {
 }
 
 
-# ALLOWED_HOSTS = ['shaileshd.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','.onrender.com']
 
 
 
