@@ -10,16 +10,37 @@ BlogNest{% endblock title %}
     
     <!-- Carousel inner -->
     <div class="carousel-inner" style="height: 400px;">
+      
+      <!-- Slide 1 -->
       <div class="carousel-item active h-100">
-        <img src="{% static 'carousel/slide1.jpg' %}" class="d-block w-100 h-100 " alt="Slide 1" style="object-fit: cover; object-position: center;">
+        <img src="{% static 'carousel/slide1.jpg' %}" class="d-block w-100 h-100" alt="Slide 1" style="object-fit: cover; object-position: center 40% ;">
+        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+          <h5>Welcome to BlogNest</h5>
+          <p>Your cozy corner for stories, ideas, and inspiration.</p>
+        </div>
       </div>
+
+      <!-- Slide 2 -->
       <div class="carousel-item h-100">
-        <img src="{% static 'carousel/slide2.jpg' %}" class="d-block w-100 h-100 " alt="Slide 2" style="object-fit: cover; object-position: center;">
+        <img src="{% static 'carousel/slide2.jpg' %}" class="d-block w-100 h-100" alt="Slide 2" style="object-fit: cover; object-position: center;">
+        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+          <h5>Discover. Learn. Share.</h5>
+          <p>Explore blogs across tech, lifestyle, creativity, and more — all in one nest.</p>
+        </div>
       </div>
-      <div class="carousel-item h-100">
-        <img src="{% static 'carousel/slide3.jpg' %}" class="d-block w-100 h-100 " alt="Slide 3" style="object-fit: cover; object-position: center;">
-      </div>
-    </div>
+
+      <!-- Slide 3 -->
+<div class="carousel-item h-100">
+  <img src="{% static 'carousel/slide3.jpg' %}" 
+       class="d-block w-100 h-100" 
+       alt="Slide 3" 
+       style="object-fit: cover; object-position: center 80%;">
+  <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+    <h5>Be Part of BlogNest</h5>
+    <p>Read, comment, and connect with a community that grows together.</p>
+  </div>
+</div>
+
 
     <!-- Controls -->
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
